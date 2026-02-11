@@ -1,46 +1,75 @@
 package com.example.addressbook.exception;
 
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-// Applies to all controllers globally
+import org.springframework.validation.FieldError;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
-    // Handle ResourceNotFoundException
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+    // -------- VALIDATION ERRORS --------
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidation(
+            MethodArgumentNotValidException ex) {
 
-        ErrorResponse error = new ErrorResponse(
-                ex.getMessage(),
-                HttpStatus.NOT_FOUND.value()
-        );
+        Map<String, String> errors = new HashMap<>();
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        ex.getBindingResult()
+                .getAllErrors()
+                .forEach(err -> {
+                    String field =
+                            ((FieldError) err).getField();
+                    String msg =
+                            err.getDefaultMessage();
+                    errors.put(field, msg);
+                });
+
+        log.warn("Validation failed: {}", errors);
+
+        return ResponseEntity.badRequest().body(errors);
     }
 
-    // Handle IllegalArgumentException (bad input cases)
+    // -------- NOT FOUND --------
+    @ExceptionHandler(AddressBookNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(
+            AddressBookNotFoundException ex) {
+
+        log.error("Not found: {}", ex.getMessage());
+
+        return ResponseEntity
+                .status(404)
+                .body(new ErrorResponse(
+                        ex.getMessage(), 404));
+    }
+
+    // -------- BAD REQUEST --------
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleBadRequest(IllegalArgumentException ex) {
+    public ResponseEntity<ErrorResponse> handleBadRequest(
+            IllegalArgumentException ex) {
 
-        ErrorResponse error = new ErrorResponse(
-                ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value()
-        );
-
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return ResponseEntity
+                .badRequest()
+                .body(new ErrorResponse(
+                        ex.getMessage(), 400));
     }
 
-    // Catch-all handler for unexpected exceptions
+    // -------- GENERIC --------
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleAll(
+            Exception ex) {
 
-        ErrorResponse error = new ErrorResponse(
-                "Internal Server Error: " + ex.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value()
-        );
+        log.error("Unhandled error", ex);
 
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity
+                .status(500)
+                .body(new ErrorResponse(
+                        "Internal server error", 500));
     }
 }
