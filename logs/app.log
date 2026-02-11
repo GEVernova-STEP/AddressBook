@@ -1,0 +1,51 @@
+2026-02-12 00:54:58 INFO  c.e.a.AddressBookApplication - Starting AddressBookApplication using Java 21.0.10 with PID 3856 (D:\GE Vernova\STEP1\AddressBook\target\classes started by ashut in D:\GE Vernova\STEP1\AddressBook)
+2026-02-12 00:54:58 INFO  c.e.a.AddressBookApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-12 00:54:59 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-12 00:54:59 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26 ms. Found 1 JPA repository interface.
+2026-02-12 00:55:00 INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 9090 (http)
+2026-02-12 00:55:00 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-12 00:55:00 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-12 00:55:00 INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1424 ms
+2026-02-12 00:55:00 INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-02-12 00:55:00 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-12 00:55:00 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Starting...
+2026-02-12 00:55:00 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Added connection org.postgresql.jdbc.PgConnection@3a128d33
+2026-02-12 00:55:00 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Start completed.
+2026-02-12 00:55:00 WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-12 00:55:01 INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/addressbook]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.1
+	Default catalog/schema: addressbook/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-12 00:55:01 INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-12 00:55:01 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-12 00:55:01 WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-12 00:55:02 INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 9090 (http) with context path '/'
+2026-02-12 00:55:02 INFO  c.e.a.AddressBookApplication - Started AddressBookApplication in 3.768 seconds (process running for 1145.505)
+2026-02-12 00:55:02 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-02-12 00:55:02 WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-02-12 00:55:02 WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-02-12 00:56:57 INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-12 00:56:57 INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-02-12 00:56:57 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-12 00:56:57 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown initiated...
+2026-02-12 00:56:57 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown completed.
+2026-02-12 00:57:02 INFO  c.e.a.AddressBookApplication - Starting AddressBookApplication using Java 21.0.10 with PID 15480 (D:\GE Vernova\STEP1\AddressBook\target\classes started by ashut in D:\GE Vernova\STEP1\AddressBook)
+2026-02-12 00:57:02 INFO  c.e.a.AddressBookApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-12 00:57:02 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-12 00:57:02 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-12 00:57:03 INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-02-12 00:57:03 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-12 00:57:03 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 65 ms. Found 1 JPA repository interface.
+2026-02-12 00:57:04 INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 9090 (http)
+2026-02-12 00:57:04 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9090"]
+2026-02-12 00:57:04 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-12 00:57:04 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-12 00:57:05 INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2480 ms
