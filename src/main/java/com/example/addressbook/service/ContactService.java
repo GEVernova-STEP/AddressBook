@@ -1,5 +1,6 @@
 package com.example.addressbook.service;
 
+import com.example.addressbook.dto.ContactDTO;
 import com.example.addressbook.exception.ResourceNotFoundException;
 import com.example.addressbook.model.Contact;
 import com.example.addressbook.repository.ContactRepository;
@@ -7,77 +8,89 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-// Service layer contains business logic
+// Service layer manages business logic
 @Service
 public class ContactService {
 
     @Autowired
-    private ContactRepository contactRepository;
+    private ContactRepository repository;
 
-    //Create new contact
-    public Contact createContact(Contact contact) {
-
-        // Basic validation
-        if (contact.getName() == null || contact.getName().isBlank()) {
-            throw new IllegalArgumentException("Contact name must not be empty");
-        }
-
-        if (contact.getEmail() == null || contact.getEmail().isBlank()) {
-            throw new IllegalArgumentException("Email must not be empty");
-        }
-
-        // Save contact
-        return contactRepository.save(contact);
+    // ---------- DTO → ENTITY ----------
+    private Contact toEntity(ContactDTO dto) {
+        Contact c = new Contact();
+        c.setName(dto.getName());
+        c.setEmail(dto.getEmail());
+        c.setPhone(dto.getPhone());
+        return c;
     }
 
-    //Get all contact
-    public List<Contact> getAllContacts() {
+    // ---------- ENTITY → DTO ----------
+    private ContactDTO toDTO(Contact c) {
+        ContactDTO dto = new ContactDTO();
+        dto.setName(c.getName());
+        dto.setEmail(c.getEmail());
+        dto.setPhone(c.getPhone());
+        return dto;
+    }
 
-        List<Contact> contacts = contactRepository.findAll();
+    // Create new contact
+    public ContactDTO create(ContactDTO dto) {
 
-        // Optional business rule (not mandatory)
-        if (contacts.isEmpty()) {
+        if (repository.existsByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+        Contact saved = repository.save(toEntity(dto));
+        return toDTO(saved);
+    }
+
+    // Get all contact
+    public List<ContactDTO> getAll() {
+
+        List<Contact> list = repository.findAll();
+
+        if (list.isEmpty()) {
             throw new ResourceNotFoundException("No contacts found");
         }
 
-        return contacts;
+        return list.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
     //Get contact by id
-    public Contact getContactById(Long id) {
+    public ContactDTO getById(Long id) {
 
-        return contactRepository.findById(id)
+        Contact c = repository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Contact not found with id: " + id));
+                        new ResourceNotFoundException("Contact not found: " + id));
+
+        return toDTO(c);
     }
 
     //Update contact
-    public Contact updateContact(Long id, Contact updatedContact) {
+    public ContactDTO update(Long id, ContactDTO dto) {
 
-        Contact existingContact = getContactById(id);
+        Contact existing = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Contact not found: " + id));
 
-        // Update only if value is present
-        if (updatedContact.getName() != null) {
-            existingContact.setName(updatedContact.getName());
-        }
+        existing.setName(dto.getName());
+        existing.setEmail(dto.getEmail());
+        existing.setPhone(dto.getPhone());
 
-        if (updatedContact.getEmail() != null) {
-            existingContact.setEmail(updatedContact.getEmail());
-        }
-
-        if (updatedContact.getPhone() != null) {
-            existingContact.setPhone(updatedContact.getPhone());
-        }
-
-        return contactRepository.save(existingContact);
+        return toDTO(repository.save(existing));
     }
 
     //Delete contact
-    public void deleteContact(Long id) {
+    public void delete(Long id) {
 
-        Contact contact = getContactById(id);
+        Contact c = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Contact not found: " + id));
 
-        contactRepository.delete(contact);
+        repository.delete(c);
     }
 }

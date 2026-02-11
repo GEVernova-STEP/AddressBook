@@ -1,70 +1,53 @@
 package com.example.addressbook.controller;
 
-import com.example.addressbook.model.Contact;
+import com.example.addressbook.dto.ContactDTO;
 import com.example.addressbook.service.ContactService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Marks class as REST Controller
+// REST controller for contacts
 @RestController
-
-// Base URL for all APIs in this controller
 @RequestMapping("/api/contact")
 public class ContactController {
 
     @Autowired
-    private ContactService contactService;
+    private ContactService service;
 
-    // POST → create new contact
+    // CREATE
     @PostMapping
-    public ResponseEntity<Contact> create(@RequestBody Contact contact) {
-
-        Contact saved = contactService.createContact(contact);
-
-        // Return 201 Created status
-        return ResponseEntity.status(201).body(saved);
+    public ResponseEntity<ContactDTO> create(@Valid @RequestBody ContactDTO dto) {
+        return ResponseEntity.status(201).body(service.create(dto));
     }
 
-    // GET → fetch all contacts
+    // GET ALL
     @GetMapping
-    public ResponseEntity<List<Contact>> getAll() {
-
-        List<Contact> list = contactService.getAllContacts();
-
-        return ResponseEntity.ok(list);
+    public ResponseEntity<List<ContactDTO>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
-    // GET → fetch contact by ID
+    // GET BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<Contact> getById(@PathVariable Long id) {
-
-        Contact contact = contactService.getContactById(id);
-
-        return ResponseEntity.ok(contact);
+    public ResponseEntity<ContactDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getById(id));
     }
 
-    // PUT → update contact by ID
+    // UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Contact> update(
+    public ResponseEntity<ContactDTO> update(
             @PathVariable Long id,
-            @RequestBody Contact contact) {
+            @Valid @RequestBody ContactDTO dto) {
 
-        Contact updated = contactService.updateContact(id, contact);
-
-        return ResponseEntity.ok(updated);
+        return ResponseEntity.ok(service.update(id, dto));
     }
 
-    // DELETE → remove contact by ID
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
-        contactService.deleteContact(id);
-
-        // Return 204 No Content
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
-
