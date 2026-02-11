@@ -41,9 +41,9 @@ public class ContactController {
     @GetMapping("/{id}")
     public ResponseEntity<Contact> getById(@PathVariable Long id) {
 
-        return contactService.getContactById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Contact contact = contactService.getContactById(id);
+
+        return ResponseEntity.ok(contact);
     }
 
     // PUT → update contact by ID
