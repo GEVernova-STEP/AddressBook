@@ -3,15 +3,17 @@ package com.example.addressbook.controller;
 import com.example.addressbook.dto.ContactDTO;
 import com.example.addressbook.service.ContactService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// REST controller for contacts
 @RestController
-@RequestMapping("/api/contact")
+@RequestMapping("/api/contacts")
+@Slf4j
 public class ContactController {
 
     @Autowired
@@ -19,8 +21,12 @@ public class ContactController {
 
     // CREATE
     @PostMapping
-    public ResponseEntity<ContactDTO> create(@Valid @RequestBody ContactDTO dto) {
-        return ResponseEntity.status(201).body(service.create(dto));
+    public ResponseEntity<ContactDTO> create(
+            @Valid @RequestBody ContactDTO dto) {
+
+        log.info("POST create contact");
+        return ResponseEntity.status(201)
+                .body(service.create(dto));
     }
 
     // GET ALL
@@ -31,7 +37,9 @@ public class ContactController {
 
     // GET BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<ContactDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<ContactDTO> getById(
+            @PathVariable Long id) {
+
         return ResponseEntity.ok(service.getById(id));
     }
 
@@ -46,7 +54,9 @@ public class ContactController {
 
     // DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id) {
+
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
