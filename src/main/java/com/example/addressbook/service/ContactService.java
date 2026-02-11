@@ -4,6 +4,7 @@ import com.example.addressbook.dto.ContactDTO;
 import com.example.addressbook.exception.ResourceNotFoundException;
 import com.example.addressbook.model.Contact;
 import com.example.addressbook.repository.ContactRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 // Service layer manages business logic
 @Service
+@Slf4j
 public class ContactService {
 
     @Autowired
