@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 
 // Base URL for all APIs in this controller
-@RequestMapping("/api/contacts")
+@RequestMapping("/api/contact")
 public class ContactController {
 
     @Autowired
