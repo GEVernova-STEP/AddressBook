@@ -1,8 +1,12 @@
 package com.example.addressbook.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
-// Standard error response body returned to client
+@Data
+@AllArgsConstructor
 public class ErrorResponse {
 
     private String message;
@@ -13,17 +17,5 @@ public class ErrorResponse {
         this.message = message;
         this.status = status;
         this.timestamp = LocalDateTime.now();
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
     }
 }
